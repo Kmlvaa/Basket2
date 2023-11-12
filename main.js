@@ -56,14 +56,12 @@ function generateProductCard(id,title,description,price,brand,category,images)
 }
 
 function renderBasketSection() {
-  // Get basket array from local storage if it exists, else - return from the function
   let basket = JSON.parse(localStorage.getItem("basket"));
   if (basket == null) {
     totalPrice.innerHTML = 0;
     return;
   }
 
-  // Reset the content of basket container, so that duplicate basket items are avoided
   basketContainer.innerHTML = "";
   cardButton.innerHTML = "Cart (";
 
@@ -72,12 +70,9 @@ function renderBasketSection() {
   var total_count = 0;
 
 
-  // Iterate through items in the basket that came from local storage and append them to basket container
   basket.forEach((x) => {
-    // Find real product based on id that is stored in local storage
     let foundProduct = products.find((p) => p.id == x.id);
     if (foundProduct == null) return;
-    // Calculate products total price
     total += x.count * foundProduct.price;
     item_total = x.count * foundProduct.price;
     total_count += x.count
@@ -94,16 +89,13 @@ function renderBasketSection() {
         <div>$<span>${item_total.toFixed(2)}</span></div>
     </div>`;
 
-    // Append basket item to basket container
     basketContainer.innerHTML += basketItem;
   });
 
   cardButton.innerHTML += total_count + ")";
 
-  // Append calculated basket value to total
   totalPrice.innerHTML = total.toFixed(2);
 
-  // Take all "increase" buttons of basket items and assign the functionality
   document.querySelectorAll(".increase-btn").forEach((btn) => {
     btn.onclick = (e) => {
       console.log("a");
@@ -116,7 +108,6 @@ function renderBasketSection() {
     };
   });
 
-  // Take all "decrease" buttons of basket items and assign the functionality
   document.querySelectorAll(".decrease-btn").forEach((btn) => {
     btn.onclick = (e) => {
       let id = e.target.getAttribute("data-id");
@@ -130,7 +121,6 @@ function renderBasketSection() {
     };
   });
 
-  // Take all "delete" buttons of basket items and assign the functionality
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.onclick = (e) => {
       let id = e.target.getAttribute("data-id");
